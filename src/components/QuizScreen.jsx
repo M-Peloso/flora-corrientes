@@ -13,7 +13,7 @@ const QuizScreen = ({ questionData, totalQuestions, currentIndex, onAnswer }) =>
   };
 
   const handleNext = () => {
-    const isCorrect = selectedOption === questionData.correctAnswerIndex - 1;
+    const isCorrect = selectedOption === questionData.correctAnswerIndex;
     onAnswer(isCorrect);
     setSelectedOption(null);
     setIsAnswered(false);
@@ -59,7 +59,7 @@ const QuizScreen = ({ questionData, totalQuestions, currentIndex, onAnswer }) =>
         {questionData.options.map((option, index) => {
           let btnClass = "option-btn";
           if (isAnswered) {
-            if (index === questionData.correctAnswerIndex - 1) {
+            if (index === questionData.correctAnswerIndex) {
               btnClass += " correct";
             } else if (index === selectedOption) {
               btnClass += " wrong";
@@ -86,23 +86,23 @@ const QuizScreen = ({ questionData, totalQuestions, currentIndex, onAnswer }) =>
       <AnimatePresence>
         {isAnswered && (
           <motion.div 
-            className={`feedback-overlay ${selectedOption === questionData.correctAnswerIndex - 1 ? 'correct' : 'wrong'}`}
+            className={`feedback-overlay ${selectedOption === questionData.correctAnswerIndex ? 'correct' : 'wrong'}`}
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 20, stiffness: 100 }}
           >
             <div className="feedback-title">
-              {selectedOption === questionData.correctAnswerIndex - 1 ? (
+              {selectedOption === questionData.correctAnswerIndex ? (
                 <><CheckCircle2 /> ¡Correcto!</>
               ) : (
                 <><XCircle /> No exactamente</>
               )}
             </div>
             <p className="feedback-text">
-              {selectedOption === questionData.correctAnswerIndex - 1 
+              {selectedOption === questionData.correctAnswerIndex 
                 ? "¡Muy bien hecho!" 
-                : "La respuesta correcta era: " + questionData.options[questionData.correctAnswerIndex - 1]
+                : "La respuesta correcta era: " + questionData.options[questionData.correctAnswerIndex]
               }
             </p>
             <button className="btn btn-primary" onClick={handleNext} style={{ alignSelf: 'flex-end', background: 'var(--white)', color: 'var(--text-main)' }}>
